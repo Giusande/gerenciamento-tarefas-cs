@@ -38,7 +38,7 @@ public class Tarefa {
     @ManyToOne
     private Projeto projeto;
 
-    @ManyToMany
+    @ManyToOne
     private Usuario responsavel;
 
     private boolean restrita;
