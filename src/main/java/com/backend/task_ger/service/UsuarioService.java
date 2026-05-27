@@ -32,16 +32,16 @@ public class UsuarioService {
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
                 .build();
-}
-
-public Usuario validarLogin(String email, String senha) {
-    Usuario usuario = repository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-    if (!passwordEncoder.matches(senha, usuario.getSenha())) {
-        throw new RuntimeException("Senha incorreta");
     }
 
-    return usuario;
-}
+    public Usuario validarLogin(String email, String senha) {
+        Usuario usuario = repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!passwordEncoder.matches(senha, usuario.getSenha())) {
+            throw new RuntimeException("Senha incorreta");
+        }
+
+        return usuario;
+    }
 }
