@@ -20,7 +20,7 @@ public class Projeto {
     @NotBlank(message = "O nome é obrigatório")
     private String nome;
 
-    @ManyToMany
+    @ManyToOne
     private Usuario usuario;
 
     @JsonIgnore
