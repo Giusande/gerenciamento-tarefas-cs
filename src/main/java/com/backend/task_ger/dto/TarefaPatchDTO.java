@@ -11,5 +11,5 @@ public class TarefaPatchDTO {
     private String descricao;
     private Status status;
     private Prioridade prioridade;
-    private List<String> etiquetasIds;
+    private List<Long> etiquetasIds;
 }
