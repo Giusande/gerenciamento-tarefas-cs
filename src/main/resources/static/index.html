@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KanbanFlow | Gerenciamento de Tarefas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/login.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">KanbanFlow</div>
+
+      <a href="#" class="btn-primary">Começar Agora</a>
+    </header>
+
+    <section class="hero" id="objetivo">
+      <div class="hero-content">
+        <span>Gerenciamento inteligente de tarefas</span>
+
+        <h1>Organize projetos, tarefas e produtividade em um único lugar.</h1>
+
+        <p>
+          O KanbanFlow é uma plataforma moderna de gerenciamento de tarefas
+          inspirada em metodologias Kanban. Organize atividades, acompanhe
+          progresso, utilize etiquetas, comentários e tarefas restritas com
+          senha para manter tudo seguro e organizado.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#" class="btn-primary">Criar Conta</a>
+          <a href="#funcionalidades" class="btn-secondary">Explorar Recursos</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="kanban-preview">
+          <div class="board-columns">
+            <div class="column">
+              <h3>📌 TODO</h3>
+
+              <div class="task">
+                <strong>Planejar API</strong>
+                <p>Definir entidades e autenticação JWT.</p>
+                <span class="tag purple">Backend</span>
+              </div>
+
+              <div class="task">
+                <strong>Protótipo UI</strong>
+                <p>Criar visual moderno com tons pastéis.</p>
+                <span class="tag orange">Design</span>
+              </div>
+            </div>
+
+            <div class="column">
+              <h3>🚀 DOING</h3>
+
+              <div class="task">
+                <strong>Tarefas Restritas</strong>
+                <p>Implementar desbloqueio por senha.</p>
+                <span class="tag green">Segurança</span>
+              </div>
+            </div>
+
+            <div class="column">
+              <h3>✅ DONE</h3>
+
+              <div class="task">
+                <strong>Login JWT</strong>
+                <p>Sistema de autenticação concluído.</p>
+                <span class="tag purple">Autenticação</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="funcionalidades">
+      <div class="section-title">
+        <h2>Funcionalidades Principais</h2>
+        <p>
+          Uma experiência completa para organizar tarefas pessoais, projetos
+          colaborativos e acompanhar produtividade com clareza.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3>Quadro Kanban</h3>
+          <p>
+            Organize tarefas em colunas intuitivas como TODO, DOING e DONE
+            utilizando um fluxo visual moderno.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Tarefas Restritas</h3>
+          <p>
+            Crie tarefas protegidas por senha para armazenar informações
+            sensíveis de forma segura.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🏷️</div>
+          <h3>Etiquetas Inteligentes</h3>
+          <p>
+            Categorize tarefas com etiquetas coloridas para facilitar buscas,
+            filtros e organização.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Comentários</h3>
+          <p>
+            Adicione comentários nas tarefas para acompanhar ideias, feedbacks e
+            evolução dos projetos.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Histórico Completo</h3>
+          <p>
+            Visualize tarefas concluídas e acompanhe sua produtividade ao longo
+            do tempo.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>API Moderna</h3>
+          <p>
+            Backend desenvolvido com Spring Boot, JWT, Swagger, paginação, soft
+            delete e arquitetura profissional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="sobre">
+      <div class="about-box">
+        <h2>Objetivo do Projeto</h2>
+
+        <p>
+          O objetivo do KanbanFlow é oferecer uma plataforma moderna para
+          gerenciamento de tarefas pessoais e projetos, utilizando uma interface
+          intuitiva inspirada em metodologias ágeis.
+        </p>
+
+        <p>
+          O sistema foi desenvolvido para unir produtividade, organização visual
+          e segurança, permitindo que usuários criem tarefas, acompanhem
+          progresso e mantenham informações protegidas.
+        </p>
+      </div>
+
+      <div class="about-box">
+        <h2>Tecnologias Utilizadas</h2>
+
+        <p>
+          O backend foi construído utilizando Spring Boot, Spring Security, JWT,
+          JPA/Hibernate e MySQL.
+        </p>
+
+        <p>
+          A aplicação segue padrões modernos de arquitetura REST, DTOs,
+          tratamento global de exceções, Swagger/OpenAPI e autenticação segura.
+        </p>
+      </div>
+    </section>
+
+    <section class="auth-section" id="auth">
+      <div class="auth-container">
+        <div class="auth-info">
+          <span class="auth-badge">Acesse sua conta</span>
+          <h2>Entre e continue organizando sua produtividade.</h2>
+
+          <p>
+            Faça login para acessar seus projetos, tarefas, etiquetas e
+            histórico de produtividade dentro do KanbanFlow.
+          </p>
+
+          <ul>
+            <li>✔ Autenticação JWT segura</li>
+            <li>✔ Projetos personalizados</li>
+            <li>✔ Tarefas restritas com senha</li>
+            <li>✔ Histórico de produtividade</li>
+          </ul>
+        </div>
+
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <button class="tab-btn active" id="loginTab">Login</button>
+            <button class="tab-btn" id="registerTab">Cadastro</button>
+          </div>
+
+          <form id="loginForm" class="form active-form">
+            <h3>Entrar</h3>
+
+            <div class="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                id="loginEmail"
+                placeholder="Digite seu email"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Senha</label>
+              <input
+                type="password"
+                id="loginSenha"
+                placeholder="Digite sua senha"
+                required
+              />
+            </div>
+
+            <button type="submit" class="auth-btn">Fazer Login</button>
+
+            <p class="message" id="loginMessage"></p>
+          </form>
+
+          <form id="registerForm" class="form hidden-form">
+            <h3>Criar Conta</h3>
+
+            <div class="input-group">
+              <label>Nome</label>
+              <input
+                type="text"
+                id="registerNome"
+                placeholder="Digite seu nome"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                id="registerEmail"
+                placeholder="Digite seu email"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Senha</label>
+              <input
+                type="password"
+                id="registerSenha"
+                placeholder="Crie uma senha"
+                required
+              />
+            </div>
+
+            <button type="submit" class="auth-btn">Criar Conta</button>
+
+            <p class="message" id="registerMessage"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 KanbanFlow • Sistema de Gerenciamento de Tarefas</p>
+    </footer>
+
+    <script src="./js/login.js"></script>
+  </body>
+</html>

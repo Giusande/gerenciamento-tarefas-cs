@@ -72,6 +72,19 @@ public class TarefaService {
                 .build());
     }
 
+    public Page<TarefaResponseDTO> listarPorProjeto(Long projetoId,Pageable pageable) {
+
+        return tarefaRepository.findByProjetoId(projetoId, pageable).map(tarefa -> TarefaResponseDTO.builder()
+                .id(tarefa.getId())
+                .titulo(tarefa.isRestrita() ? "🔒 Tarefa Restrita" : tarefa.getTitulo())
+                .descricao(tarefa.isRestrita() ? null : tarefa.getDescricao())
+                .status(tarefa.getStatus().name())
+                .prioridade(tarefa.getPrioridade().name())
+                .bloqueada(tarefa.isRestrita())
+                .etiquetas(tarefa.getEtiquetas())
+                .build());
+    }
+
     public TarefaResponseDTO desbloquear(Long tarefaId, DesbloqueioRequestDTO dto) {
         Tarefa tarefa = tarefaRepository.findById(tarefaId)
                 .orElseThrow(() -> new NotFoundException("Tarefa não encontrada"));

@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KanbanFlow | Projeto</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(180deg, #fffaf8 0%, #f5f0ff 100%);
+        min-height: 100vh;
+        color: #2d2d2d;
+      }
+
+      header {
+        width: 100%;
+        padding: 24px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: #8b7cf8;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .header-btn {
+        border: none;
+        padding: 12px 18px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s ease;
+      }
+
+      .primary {
+        background: #8b7cf8;
+        color: white;
+        box-shadow: 0 10px 25px rgba(139, 124, 248, 0.25);
+      }
+
+      .secondary {
+        background: white;
+        border: 1px solid #ddd;
+        color: #555;
+      }
+
+      .header-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .project-info {
+        padding: 40px 5% 10px;
+      }
+
+      .project-info h1 {
+        font-size: 2.8rem;
+        margin-bottom: 12px;
+      }
+
+      .project-info p {
+        color: #666;
+        line-height: 1.7;
+        max-width: 700px;
+      }
+
+      .kanban-board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding: 30px 5% 50px;
+        align-items: flex-start;
+      }
+
+      .column {
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 28px;
+        padding: 22px;
+        min-height: 70vh;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.05);
+      }
+
+      .column-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 22px;
+      }
+
+      .column-header h2 {
+        font-size: 1.2rem;
+      }
+
+      .task-count {
+        background: #ece7ff;
+        color: #7a63ff;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .tasks-container {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .task-card {
+        background: white;
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+        transition: 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        cursor: grab;
+      }
+
+      .task-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .task-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .priority {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .alta {
+        background: #ffe6e6;
+        color: #d92d20;
+      }
+
+      .media {
+        background: #fff3db;
+        color: #f59e0b;
+      }
+
+      .baixa {
+        background: #ddfff2;
+        color: #00a66c;
+      }
+
+      .restricted {
+        background: #f1ebff;
+        color: #7b61ff;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .task-card h3 {
+        margin-bottom: 12px;
+        color: #333;
+      }
+
+      .task-card p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 16px;
+        font-size: 0.95rem;
+      }
+
+      .tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #ede9ff;
+        color: #7b61ff;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 200;
+        padding: 20px;
+      }
+
+      .modal-content {
+        width: 100%;
+        max-width: 650px;
+        background: white;
+        border-radius: 30px;
+        padding: 32px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-content h2 {
+        margin-bottom: 24px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        font-weight: 600;
+        color: #444;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        padding: 15px;
+        border-radius: 14px;
+        border: 1px solid #ddd;
+        outline: none;
+        transition: 0.3s ease;
+        resize: none;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        border-color: #8b7cf8;
+        box-shadow: 0 0 0 4px rgba(139, 124, 248, 0.1);
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .save-btn,
+      .cancel-btn {
+        flex: 1;
+        padding: 14px;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s ease;
+      }
+
+      .save-btn {
+        background: #8b7cf8;
+        color: white;
+      }
+
+      .cancel-btn {
+        background: #f2f2f2;
+      }
+
+      .save-btn:hover,
+      .cancel-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .task-card {
+        cursor: grab;
+      }
+
+      .task-card:active {
+        cursor: grabbing;
+      }
+
+      .task-card.dragging {
+        opacity: 0.5;
+        transform: rotate(2deg);
+      }
+
+      .tasks-container {
+        min-height: 300px;
+        transition: all 0.2s ease;
+      }
+
+      .tasks-container.drag-over {
+        background: rgba(139, 124, 248, 0.08);
+        border: 2px dashed #8b7cf8;
+        border-radius: 20px;
+      }
+
+      .edit-btn {
+        margin-top: 12px;
+        width: 100%;
+        border: none;
+        background: #8b7cf8;
+        color: white;
+        padding: 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .edit-btn:hover {
+        opacity: 0.9;
+      }
+
+      @media (max-width: 1100px) {
+        .kanban-board {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">KanbanFlow</div>
+
+      <div class="header-actions">
+        <button
+          class="header-btn secondary"
+          onclick="window.location.href = 'dashboard.html'"
+        >
+          Voltar
+        </button>
+
+        <button class="header-btn primary" id="openTaskModalBtn">
+          + Nova Tarefa
+        </button>
+      </div>
+    </header>
+
+    <section class="project-info">
+      <h1 id="projectName">Projeto</h1>
+      <p id="projectDescription">
+        Organize tarefas e acompanhe o progresso do projeto.
+      </p>
+    </section>
+
+    <section class="kanban-board">
+      <div class="column">
+        <div class="column-header">
+          <h2>PENDENTE</h2>
+          <span class="task-count" id="todoCount">0</span>
+        </div>
+
+        <div
+          class="tasks-container"
+          id="todoColumn"
+          data-status="PENDENTE"
+        ></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header">
+          <h2>EM ANDAMENTO</h2>
+          <span class="task-count" id="doingCount">0</span>
+        </div>
+
+        <div
+          class="tasks-container"
+          id="doingColumn"
+          data-status="EM_ANDAMENTO"
+        ></div>
+      </div>
+
+      <div class="column">
+        <div class="column-header">
+          <h2>CONCLUIDA</h2>
+          <span class="task-count" id="doneCount">0</span>
+        </div>
+
+        <div
+          class="tasks-container"
+          id="doneColumn"
+          data-status="CONCLUIDA"
+        ></div>
+      </div>
+    </section>
+
+    <div class="modal" id="taskModal">
+      <div class="modal-content">
+        <h2>Criar Nova Tarefa</h2>
+
+        <form id="taskForm">
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="titulo" required />
+          </div>
+
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea id="descricao" rows="5" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Prioridade</label>
+            <select id="prioridade">
+              <option value="BAIXA">Baixa</option>
+              <option value="MEDIA">Média</option>
+              <option value="ALTA">Alta</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select id="status">
+              <option value="PENDENTE">Pendente</option>
+              <option value="EM_ANDAMENTO">Em Andamento</option>
+              <option value="CONCLUIDA">Concluída</option>
+            </select>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="restrita" />
+            <label>Tarefa restrita</label>
+          </div>
+
+          <div class="form-group" id="senhaGroup" style="display: none">
+            <label>Senha da Tarefa</label>
+            <input type="password" id="senha" />
+          </div>
+
+          <div class="modal-actions">
+            <button type="submit" class="save-btn">Criar Tarefa</button>
+
+            <button type="button" class="cancel-btn" id="closeTaskModalBtn">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="editTaskModal">
+      <div class="modal-content">
+        <h2>Editar Tarefa</h2>
+
+        <form id="editTaskForm">
+          <input type="hidden" id="editId" />
+
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="editTitulo" required />
+          </div>
+
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea id="editDescricao" rows="4"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Prioridade</label>
+
+            <select id="editPrioridade">
+              <option value="BAIXA">Baixa</option>
+              <option value="MEDIA">Média</option>
+              <option value="ALTA">Alta</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+
+            <select id="editStatus">
+              <option value="PENDENTE">TODO</option>
+              <option value="EM_ANDAMENTO">DOING</option>
+              <option value="CONCLUIDA">DONE</option>
+            </select>
+          </div>
+
+          <div class="modal-actions">
+            <button class="save-btn" type="submit">Salvar Alterações</button>
+
+            <button
+              type="button"
+              class="cancel-btn"
+              onclick="fecharModalEdicao()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:8080";
+
+      const token = localStorage.getItem("token");
+      const projetoId = localStorage.getItem("projetoId");
+
+      if (!token || !projetoId) {
+        window.location.href = "index.html";
+      }
+
+      const taskModal = document.getElementById("taskModal");
+
+      document
+        .getElementById("openTaskModalBtn")
+        .addEventListener("click", () => {
+          taskModal.style.display = "flex";
+        });
+
+      document
+        .getElementById("closeTaskModalBtn")
+        .addEventListener("click", () => {
+          taskModal.style.display = "none";
+        });
+
+      document.getElementById("restrita").addEventListener("change", (e) => {
+        document.getElementById("senhaGroup").style.display = e.target.checked
+          ? "block"
+          : "none";
+      });
+
+      async function carregarProjeto() {
+        try {
+          const response = await fetch(`${API_URL}/projetos/${projetoId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const projeto = await response.json();
+
+          document.getElementById("projectName").innerText = projeto.nome;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      async function carregarTarefas() {
+        try {
+          const response = await fetch(
+            `${API_URL}/tarefas/projeto/${projetoId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+
+          const data = await response.json();
+
+          const tarefas = data.content || [];
+
+          const todoColumn = document.getElementById("todoColumn");
+          const doingColumn = document.getElementById("doingColumn");
+          const doneColumn = document.getElementById("doneColumn");
+
+          todoColumn.innerHTML = "";
+          doingColumn.innerHTML = "";
+          doneColumn.innerHTML = "";
+
+          let todo = 0;
+          let doing = 0;
+          let done = 0;
+
+          tarefas.forEach((tarefa) => {
+            const card = document.createElement("div");
+            card.classList.add("task-card");
+
+            card.draggable = true;
+            card.dataset.id = tarefa.id;
+
+            card.addEventListener("dragstart", () => {
+              card.classList.add("dragging");
+            });
+
+            card.addEventListener("dragend", () => {
+              card.classList.remove("dragging");
+            });
+
+            const prioridadeClass = tarefa.prioridade.toLowerCase();
+
+            card.innerHTML = `
+            <div class="task-top">
+              <span class="priority ${prioridadeClass}">
+                ${tarefa.prioridade}
+              </span>
+
+              ${
+                tarefa.bloqueada
+                  ? '<span class="restricted">🔒 Restrita</span>'
+                  : ""
+              }
+            </div>
+
+            <h3>${tarefa.titulo}</h3>
+            <p>${tarefa.descricao}</p>
+
+            <div class="tags">
+              <span class="tag">Kanban</span>
+            </div>
+
+            <button class="edit-btn" data-id="${tarefa.id}">Editar</button>
+            `;
+
+            const editBtn = card.querySelector(".edit-btn");
+
+            editBtn.addEventListener("click", () => {
+              abrirModalEdicao(tarefa);
+            });
+
+            if (tarefa.status === "PENDENTE") {
+              todoColumn.appendChild(card);
+              todo++;
+            }
+
+            if (tarefa.status === "EM_ANDAMENTO") {
+              doingColumn.appendChild(card);
+              doing++;
+            }
+
+            if (tarefa.status === "CONCLUIDA") {
+              doneColumn.appendChild(card);
+              done++;
+            }
+          });
+
+          document.getElementById("todoCount").innerText = todo;
+          document.getElementById("doingCount").innerText = doing;
+          document.getElementById("doneCount").innerText = done;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      document
+        .getElementById("taskForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const titulo = document.getElementById("titulo").value;
+          const descricao = document.getElementById("descricao").value;
+          const prioridade = document.getElementById("prioridade").value;
+          const status = document.getElementById("status").value;
+          const restrita = document.getElementById("restrita").checked;
+          const senha = document.getElementById("senha").value;
+
+          try {
+            const response = await fetch(`${API_URL}/tarefas`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                titulo,
+                descricao,
+                prioridade,
+                status,
+                restrita,
+                senha,
+                projetoId,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error("Erro ao criar tarefa");
+            }
+
+            taskModal.style.display = "none";
+
+            document.getElementById("taskForm").reset();
+
+            carregarTarefas();
+          } catch (error) {
+            alert(error.message);
+          }
+        });
+
+      function configurarDragAndDrop() {
+        const columns = document.querySelectorAll(".tasks-container");
+
+        columns.forEach((column) => {
+          column.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            column.classList.add("drag-over");
+          });
+
+          column.addEventListener("dragleave", () => {
+            column.classList.remove("drag-over");
+          });
+
+          column.addEventListener("drop", async (e) => {
+            e.preventDefault();
+
+            column.classList.remove("drag-over");
+
+            const card = document.querySelector(".dragging");
+
+            if (!card) return;
+
+            const tarefaId = card.dataset.id;
+
+            const novoStatus = column.dataset.status;
+
+            try {
+              const response = await fetch(`${API_URL}/tarefas/${tarefaId}`, {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  status: novoStatus,
+                }),
+              });
+
+              if (!response.ok) {
+                throw new Error("Erro ao atualizar status");
+              }
+
+              carregarTarefas();
+            } catch (error) {
+              console.error(error);
+              alert("Erro ao mover tarefa");
+            }
+          });
+        });
+      }
+
+      function abrirModalEdicao(tarefa) {
+        document.getElementById("editId").value = tarefa.id;
+
+        document.getElementById("editTitulo").value = tarefa.titulo;
+
+        document.getElementById("editDescricao").value = tarefa.descricao;
+
+        document.getElementById("editPrioridade").value = tarefa.prioridade;
+
+        document.getElementById("editStatus").value = tarefa.status;
+
+        document.getElementById("editTaskModal").style.display = "flex";
+      }
+
+      function fecharModalEdicao() {
+        document.getElementById("editTaskModal").style.display = "none";
+      }
+
+      document
+        .getElementById("editTaskForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const id = document.getElementById("editId").value;
+
+          try {
+            const response = await fetch(`${API_URL}/tarefas/${id}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                titulo: document.getElementById("editTitulo").value,
+
+                descricao: document.getElementById("editDescricao").value,
+
+                prioridade: document.getElementById("editPrioridade").value,
+
+                status: document.getElementById("editStatus").value,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error("Erro ao atualizar");
+            }
+
+            fecharModalEdicao();
+
+            carregarTarefas();
+          } catch (error) {
+            console.error(error);
+
+            alert("Erro ao atualizar tarefa");
+          }
+        });
+
+      configurarDragAndDrop();
+
+      carregarProjeto();
+      carregarTarefas();
+    </script>
+  </body>
+</html>

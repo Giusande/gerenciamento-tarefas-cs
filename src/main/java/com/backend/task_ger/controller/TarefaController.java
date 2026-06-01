@@ -53,5 +53,10 @@ public class TarefaController {
         service.adicionarEtiqueta(tarefaId, etiquetaId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/projeto/{id}")
+    public ResponseEntity<Page<TarefaResponseDTO>> listarPorProjeto(@PathVariable Long id, Pageable pageable) {
+        return ResponseEntity.ok(service.listarPorProjeto(id,pageable));
+    }
 }
 
