@@ -48,12 +48,6 @@ public class TarefaController {
         return ResponseEntity.ok(service.historico(pageable));
     }
 
-    @PostMapping("/{tarefaId}/etiquetas/{etiquetaId}")
-    public ResponseEntity<TarefaResponseDTO> adicionarEtiqueta(@PathVariable Long tarefaId, @PathVariable Long etiquetaId) {
-        service.adicionarEtiqueta(tarefaId, etiquetaId);
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/projeto/{id}")
     public ResponseEntity<Page<TarefaResponseDTO>> listarPorProjeto(@PathVariable Long id, Pageable pageable) {
         return ResponseEntity.ok(service.listarPorProjeto(id,pageable));

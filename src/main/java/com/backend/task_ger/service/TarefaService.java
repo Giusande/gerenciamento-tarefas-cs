@@ -23,13 +23,29 @@ public class TarefaService {
     private final EtiquetaRepository etiquetaRepository;
 
     public TarefaResponseDTO criar(TarefaRequestDTO dto) {
-        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Projeto projeto = projetoRepository.findById(dto.getProjetoId())
-                .orElseThrow(() -> new NotFoundException("Projeto não encontrado"));
+        Usuario usuario =
+                (Usuario) SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getPrincipal();
 
-        if (!projeto.getUsuario().getId().equals(usuario.getId())) {
-            throw new RuntimeException("Acesso negado");
+        Projeto projeto =
+                projetoRepository.findById(
+                        dto.getProjetoId()
+                )
+                .orElseThrow(() ->
+                        new NotFoundException(
+                                "Projeto não encontrado"
+                        ));
+
+        if (!projeto.getUsuario()
+                .getId()
+                .equals(usuario.getId())) {
+
+            throw new RuntimeException(
+                    "Acesso negado"
+            );
         }
 
         Tarefa tarefa = Tarefa.builder()
@@ -40,8 +56,25 @@ public class TarefaService {
                 .responsavel(usuario)
                 .projeto(projeto)
                 .restrita(dto.isRestrita())
-                .senhaRestrita(dto.isRestrita() ? passwordEncoder.encode(dto.getSenha()) : null)
+                .senhaRestrita(
+                        dto.isRestrita()
+                                ? passwordEncoder.encode(
+                                        dto.getSenha()
+                                )
+                                : null
+                )
                 .build();
+
+        if (dto.getEtiquetasIds() != null &&
+            !dto.getEtiquetasIds().isEmpty()) {
+
+            List<Etiqueta> etiquetas =
+                    etiquetaRepository.findAllById(
+                            dto.getEtiquetasIds()
+                    );
+
+            tarefa.setEtiquetas(etiquetas);
+        }
 
         tarefaRepository.save(tarefa);
 
@@ -168,16 +201,5 @@ public class TarefaService {
                         .bloqueada(tarefa.isRestrita())
                         .etiquetas(tarefa.getEtiquetas())
                         .build());
-    }
-
-    public void adicionarEtiqueta(Long tarefaId, Long etiquetaId) {
-        Tarefa tarefa = tarefaRepository.findById(tarefaId)
-                .orElseThrow(() -> new NotFoundException("Tarefa não encontrada"));
-
-        Etiqueta etiqueta = etiquetaRepository.findById(etiquetaId)
-                .orElseThrow(() -> new NotFoundException("Etiqueta não encontrada"));
-
-        tarefa.getEtiquetas().add(etiqueta);
-        tarefaRepository.save(tarefa);
     }
 }

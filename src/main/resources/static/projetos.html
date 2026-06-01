@@ -204,6 +204,7 @@
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
+        margin-bottom: 12px;
       }
 
       .tag {
@@ -239,6 +240,15 @@
 
       .modal-content h2 {
         margin-bottom: 24px;
+      }
+
+      .modal-content input {
+        padding: 15px;
+        border-radius: 14px;
+        border: 1px solid #ddd;
+        outline: none;
+        transition: 0.3s ease;
+        resize: none;
       }
 
       .form-group {
@@ -333,20 +343,298 @@
         border-radius: 20px;
       }
 
-      .edit-btn {
-        margin-top: 12px;
+      .task-details-modal {
+        max-width: 850px;
         width: 100%;
+        padding: 35px;
+      }
+
+      .task-details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .task-details-header h2 {
+        font-size: 2rem;
+        color: #2d2d2d;
+      }
+
+      .close-modal-btn {
         border: none;
-        background: #8b7cf8;
-        color: white;
-        padding: 10px;
+        background: #f4f4f4;
+        width: 42px;
+        height: 42px;
         border-radius: 12px;
         cursor: pointer;
+        font-size: 1rem;
+        transition: 0.3s;
+      }
+
+      .close-modal-btn:hover {
+        background: #ece7ff;
+        color: #7b61ff;
+      }
+
+      .task-description-card {
+        background: #faf8ff;
+        border: 1px solid #ece7ff;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+
+      .task-description-card h4 {
+        color: #7b61ff;
+        margin-bottom: 10px;
+      }
+
+      .task-description-card p {
+        line-height: 1.8;
+        color: #555;
+      }
+
+      .comments-section {
+        margin-bottom: 25px;
+      }
+
+      .comments-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .comments-header h3 {
+        color: #333;
+      }
+
+      .comments-header span {
+        background: #ece7ff;
+        color: #7b61ff;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      #commentsContainer {
+        max-height: 320px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding-right: 8px;
+      }
+
+      .comment {
+        background: white;
+        border: 1px solid #ececec;
+        border-left: 5px solid #8b7cf8;
+        border-radius: 18px;
+        padding: 16px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+      }
+
+      .comment-user {
+        font-weight: 700;
+        color: #7b61ff;
+        margin-bottom: 8px;
+      }
+
+      .comment-text {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .comment-date {
+        margin-top: 10px;
+        font-size: 0.8rem;
+        color: #999;
+      }
+
+      .comment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .comment-form textarea {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 18px;
+        padding: 18px;
+        resize: none;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .comment-form textarea:focus {
+        border-color: #8b7cf8;
+        box-shadow: 0 0 0 4px rgba(139, 124, 248, 0.1);
+      }
+
+      .comment-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+
+      .comment-actions .save-btn {
+        width: auto;
+        padding: 14px 24px;
+      }
+
+      .comment-actions .cancel-btn {
+        width: auto;
+        padding: 14px 24px;
+      }
+
+      #commentsContainer::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      #commentsContainer::-webkit-scrollbar-thumb {
+        background: #d8d0ff;
+        border-radius: 999px;
+      }
+
+      #listaEtiquetas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .etiqueta-chip {
+        background: #ede9ff;
+        color: #7b61ff;
+
+        padding: 10px 15px;
+
+        border-radius: 999px;
+
+        font-size: 0.9rem;
         font-weight: 600;
       }
 
-      .edit-btn:hover {
+      .checkbox-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        background: #f4f0ff;
+
+        color: #7b61ff;
+
+        padding: 10px 15px;
+
+        border-radius: 999px;
+
+        cursor: pointer;
+
+        margin: 5px;
+
+        font-weight: 600;
+      }
+
+      .checkbox-tag input {
+        cursor: pointer;
+      }
+
+      .tag {
+        padding: 6px 12px;
+        border-radius: 999px;
+
+        font-size: 0.75rem;
+        font-weight: 700;
+
+        display: inline-flex;
+        align-items: center;
+
+        white-space: nowrap;
+      }
+
+      .unlock-btn {
+        width: 100%;
+
+        margin-top: 10px;
+
+        border: none;
+
+        background: #7b61ff;
+
+        color: white;
+
+        padding: 12px;
+
+        border-radius: 12px;
+
+        cursor: pointer;
+
+        font-weight: 600;
+      }
+
+      .unlock-btn:hover {
         opacity: 0.9;
+      }
+      .task-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .action-btn {
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        padding: 12px 16px;
+
+        border: none;
+        border-radius: 14px;
+
+        font-size: 0.9rem;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: all 0.25s ease;
+      }
+
+      .action-btn span {
+        font-size: 1rem;
+      }
+
+      .edit-btn {
+        background: rgba(139, 124, 248, 0.12);
+        color: #7b61ff;
+        border: 1px solid rgba(123, 97, 255, 0.15);
+      }
+
+      .edit-btn:hover {
+        background: rgba(139, 124, 248, 0.18);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(123, 97, 255, 0.12);
+      }
+
+      .delete-btn {
+        background: rgba(255, 100, 100, 0.12);
+        color: #e5484d;
+        border: 1px solid rgba(229, 72, 77, 0.15);
+      }
+
+      .delete-btn:hover {
+        background: rgba(255, 100, 100, 0.18);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(229, 72, 77, 0.12);
+      }
+
+      .action-btn:active {
+        transform: scale(0.97);
       }
 
       @media (max-width: 1100px) {
@@ -370,6 +658,10 @@
 
         <button class="header-btn primary" id="openTaskModalBtn">
           + Nova Tarefa
+        </button>
+
+        <button class="header-btn secondary" id="openEtiquetaModalBtn">
+          🏷️ Etiquetas
         </button>
       </div>
     </header>
@@ -435,6 +727,12 @@
           <div class="form-group">
             <label>Descrição</label>
             <textarea id="descricao" rows="5" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Etiquetas</label>
+
+            <div id="etiquetasContainer"></div>
           </div>
 
           <div class="form-group">
@@ -507,9 +805,9 @@
             <label>Status</label>
 
             <select id="editStatus">
-              <option value="PENDENTE">TODO</option>
-              <option value="EM_ANDAMENTO">DOING</option>
-              <option value="CONCLUIDA">DONE</option>
+              <option value="PENDENTE">PENDENTE</option>
+              <option value="EM_ANDAMENTO">EM_ANDAMENTO</option>
+              <option value="CONCLUIDA">CONCLUIDA</option>
             </select>
           </div>
 
@@ -527,12 +825,130 @@
         </form>
       </div>
     </div>
+    <div class="modal" id="taskDetailsModal">
+      <div class="modal-content task-details-modal">
+        <div class="task-details-header">
+          <h2 id="detailsTitulo"></h2>
 
+          <button class="close-modal-btn" onclick="fecharDetalhes()">✕</button>
+        </div>
+
+        <div class="task-description-card">
+          <h4>Descrição</h4>
+
+          <p id="detailsDescricao"></p>
+        </div>
+
+        <div class="comments-section">
+          <div class="comments-header">
+            <h3>💬 Comentários</h3>
+            <span id="commentsCount">0</span>
+          </div>
+
+          <div id="commentsContainer"></div>
+        </div>
+
+        <form id="commentForm" class="comment-form">
+          <textarea
+            id="novoComentario"
+            placeholder="Escreva um comentário..."
+            rows="4"
+            required
+          ></textarea>
+
+          <div class="comment-actions">
+            <button type="button" class="cancel-btn" onclick="fecharDetalhes()">
+              Fechar
+            </button>
+
+            <button class="save-btn" type="submit">Publicar Comentário</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal" id="etiquetaModal">
+      <div class="modal-content">
+        <h2>Gerenciar Etiquetas</h2>
+
+        <form id="etiquetaForm">
+          <div class="form-group">
+            <label>Nome da Etiqueta</label>
+
+            <input
+              type="text"
+              id="etiquetaNome"
+              placeholder="Ex: Backend"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Cor</label>
+
+            <input type="color" id="etiquetaCor" value="#8B7CF8" />
+          </div>
+
+          <button type="submit" class="save-btn">Criar Etiqueta</button>
+        </form>
+
+        <hr style="margin: 20px 0" />
+
+        <h3>Etiquetas Disponíveis</h3>
+
+        <div id="listaEtiquetas"></div>
+
+        <br />
+
+        <button class="cancel-btn" onclick="fecharModalEtiqueta()">
+          Fechar
+        </button>
+      </div>
+    </div>
+    <div class="modal" id="unlockModal">
+      <div class="modal-content">
+        <h2>🔒 Tarefa Restrita</h2>
+
+        <p>Digite a senha para visualizar esta tarefa.</p>
+
+        <br />
+
+        <input type="password" id="unlockPassword" placeholder="Senha" />
+
+        <br /><br />
+
+        <div class="modal-actions">
+          <button class="save-btn" onclick="desbloquearTarefa()">
+            Desbloquear
+          </button>
+
+          <button class="cancel-btn" onclick="fecharUnlockModal()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="deleteModal">
+      <div class="modal-content">
+        <h2>Excluir tarefa</h2>
+
+        <p>Deseja realmente excluir esta tarefa?</p>
+
+        <div class="modal-actions" style="margin-top: 20px">
+          <button class="save-btn" onclick="excluirTarefa()">Sim</button>
+
+          <button class="cancel-btn" onclick="fecharDeleteModal()">Não</button>
+        </div>
+      </div>
+    </div>
     <script>
       const API_URL = "http://localhost:8080";
 
       const token = localStorage.getItem("token");
       const projetoId = localStorage.getItem("projetoId");
+
+      let tarefaAtual = null;
+      let tarefaBloqueadaId = null;
+      let tarefaExcluirId = null;
 
       if (!token || !projetoId) {
         window.location.href = "index.html";
@@ -629,17 +1045,96 @@
                   ? '<span class="restricted">🔒 Restrita</span>'
                   : ""
               }
+              </div>
+
+              <div class="tags">
+  
+                ${
+                  tarefa.etiquetas
+                    ? tarefa.etiquetas
+                        .map(
+                          (etiqueta) => `
+                            <span
+                              class="tag"
+                              style="
+                                background:${etiqueta.cor}20;
+                                color:${etiqueta.cor};
+                                border:1px solid ${etiqueta.cor}40;
+                              "
+                            >
+                              ${etiqueta.nome}
+                            </span>
+                          `,
+                        )
+                        .join("")
+                    : ""
+                }
+  
+              </div>
+
+            ${
+              tarefa.bloqueada
+                ? `
+                <h3>🔒 Tarefa Restrita</h3>
+
+                <p>
+                  Conteúdo protegido por senha
+                </p>
+
+                <button
+                  class="unlock-btn"
+                  data-id="${tarefa.id}"
+                >
+                  Desbloquear
+                </button>
+              `
+                : `
+                <h3>${tarefa.titulo}</h3>
+
+                <p>${tarefa.descricao}</p>
+
+              `
+            }
+            <div class="task-actions">
+
+              <button
+                class="action-btn edit-btn"
+                data-id="${tarefa.id}"
+              >
+                Editar
+              </button>
+
+              <button
+                class="action-btn delete-btn"
+                data-id="${tarefa.id}"
+              >
+                Excluir
+              </button>
+
             </div>
-
-            <h3>${tarefa.titulo}</h3>
-            <p>${tarefa.descricao}</p>
-
-            <div class="tags">
-              <span class="tag">Kanban</span>
-            </div>
-
-            <button class="edit-btn" data-id="${tarefa.id}">Editar</button>
             `;
+
+            const deleteBtn = card.querySelector(".delete-btn");
+
+            if (deleteBtn) {
+              deleteBtn.addEventListener("click", () =>
+                confirmarExclusao(tarefa.id),
+              );
+            }
+
+            const unlockBtn = card.querySelector(".unlock-btn");
+
+            if (unlockBtn) {
+              unlockBtn.addEventListener("click", () => {
+                tarefaBloqueadaId = tarefa.id;
+
+                document.getElementById("unlockModal").style.display = "flex";
+              });
+            }
+
+            card.addEventListener("dblclick", () => {
+              abrirDetalhes(tarefa);
+            });
 
             const editBtn = card.querySelector(".edit-btn");
 
@@ -682,6 +1177,9 @@
           const status = document.getElementById("status").value;
           const restrita = document.getElementById("restrita").checked;
           const senha = document.getElementById("senha").value;
+          const etiquetasIds = [
+            ...document.querySelectorAll("#etiquetasContainer input:checked"),
+          ].map((checkbox) => Number(checkbox.value));
 
           try {
             const response = await fetch(`${API_URL}/tarefas`, {
@@ -698,6 +1196,7 @@
                 restrita,
                 senha,
                 projetoId,
+                etiquetasIds,
               }),
             });
 
@@ -823,8 +1322,299 @@
           }
         });
 
+      async function abrirDetalhes(tarefa) {
+        tarefaAtual = tarefa;
+
+        document.getElementById("detailsTitulo").innerText = tarefa.titulo;
+
+        document.getElementById("detailsDescricao").innerText =
+          tarefa.descricao;
+
+        document.getElementById("taskDetailsModal").style.display = "flex";
+
+        carregarComentarios(tarefa.id);
+      }
+
+      function fecharDetalhes() {
+        document.getElementById("taskDetailsModal").style.display = "none";
+      }
+
+      async function carregarComentarios(tarefaId) {
+        try {
+          const response = await fetch(
+            `${API_URL}/comentarios/tarefa/${tarefaId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+
+          const comentarios = await response.json();
+
+          const container = document.getElementById("commentsContainer");
+
+          container.innerHTML = "";
+
+          comentarios.forEach((comentario) => {
+            const div = document.createElement("div");
+
+            div.classList.add("comment");
+
+            div.innerHTML = `
+              <div class="comment-user">
+                ${comentario.autor?.nome || "Usuário"}
+              </div>
+
+              <div class="comment-text">
+                ${comentario.texto}
+              </div>
+
+              <div class="comment-date">
+                ${new Date(comentario.criadoEm).toLocaleString("pt-BR")}
+              </div>
+            `;
+
+            document.getElementById("commentsCount").innerText =
+              comentarios.length;
+
+            container.appendChild(div);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      document
+        .getElementById("commentForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const texto = document.getElementById("novoComentario").value;
+
+          try {
+            const response = await fetch(`${API_URL}/comentarios`, {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+
+              body: JSON.stringify({
+                texto,
+                tarefaId: tarefaAtual.id,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error();
+            }
+
+            document.getElementById("novoComentario").value = "";
+
+            carregarComentarios(tarefaAtual.id);
+          } catch (error) {
+            alert("Erro ao enviar comentário");
+          }
+        });
+
+      const etiquetaModal = document.getElementById("etiquetaModal");
+
+      document
+        .getElementById("openEtiquetaModalBtn")
+        .addEventListener("click", () => {
+          etiquetaModal.style.display = "flex";
+
+          carregarEtiquetas();
+        });
+
+      function fecharModalEtiqueta() {
+        etiquetaModal.style.display = "none";
+      }
+
+      async function carregarEtiquetas() {
+        try {
+          const response = await fetch(`${API_URL}/etiquetas`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const etiquetas = await response.json();
+
+          renderizarEtiquetas(etiquetas);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      function renderizarEtiquetas(etiquetas) {
+        const lista = document.getElementById("listaEtiquetas");
+
+        const container = document.getElementById("etiquetasContainer");
+
+        lista.innerHTML = "";
+        container.innerHTML = "";
+
+        etiquetas.forEach((etiqueta) => {
+          lista.innerHTML += `
+      <div
+        class="etiqueta-chip"
+        style="
+          background:${etiqueta.cor}20;
+          color:${etiqueta.cor};
+          border:1px solid ${etiqueta.cor}40;
+        "
+      >
+        ${etiqueta.nome}
+      </div>
+    `;
+
+          container.innerHTML += `
+      <label
+        class="checkbox-tag"
+        style="
+          background:${etiqueta.cor}20;
+          color:${etiqueta.cor};
+          border:1px solid ${etiqueta.cor}40;
+        "
+      >
+
+        <input
+          type="checkbox"
+          value="${etiqueta.id}"
+        >
+
+        ${etiqueta.nome}
+
+      </label>
+    `;
+        });
+      }
+
+      document
+        .getElementById("etiquetaForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const nome = document.getElementById("etiquetaNome").value;
+
+          const cor = document.getElementById("etiquetaCor").value;
+
+          try {
+            const response = await fetch(`${API_URL}/etiquetas`, {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+
+                Authorization: `Bearer ${token}`,
+              },
+
+              body: JSON.stringify({
+                nome,
+                cor,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error();
+            }
+
+            document.getElementById("etiquetaForm").reset();
+
+            carregarEtiquetas();
+          } catch (error) {
+            alert("Erro ao criar etiqueta");
+          }
+        });
+
+      function fecharUnlockModal() {
+        document.getElementById("unlockModal").style.display = "none";
+
+        document.getElementById("unlockPassword").value = "";
+      }
+
+      async function desbloquearTarefa() {
+        const senha = document.getElementById("unlockPassword").value;
+
+        try {
+          const response = await fetch(
+            `${API_URL}/tarefas/${tarefaBloqueadaId}/desbloquear`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+
+                Authorization: `Bearer ${token}`,
+              },
+
+              body: JSON.stringify({
+                senha,
+              }),
+            },
+          );
+
+          if (!response.ok) {
+            alert("Senha incorreta");
+
+            return;
+          }
+
+          const tarefa = await response.json();
+
+          fecharUnlockModal();
+
+          abrirDetalhes(tarefa);
+        } catch (error) {
+          console.error(error);
+
+          alert("Erro ao desbloquear");
+        }
+      }
+
+      function confirmarExclusao(id) {
+        tarefaExcluirId = id;
+
+        document.getElementById("deleteModal").style.display = "flex";
+      }
+
+      function fecharDeleteModal() {
+        document.getElementById("deleteModal").style.display = "none";
+
+        tarefaExcluirId = null;
+      }
+
+      async function excluirTarefa() {
+        try {
+          const response = await fetch(
+            `${API_URL}/tarefas/${tarefaExcluirId}`,
+            {
+              method: "DELETE",
+
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+
+          if (!response.ok) {
+            throw new Error("Erro ao excluir");
+          }
+
+          fecharDeleteModal();
+
+          carregarTarefas();
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+
       configurarDragAndDrop();
 
+      carregarEtiquetas();
       carregarProjeto();
       carregarTarefas();
     </script>
