@@ -1,473 +1,69 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KanbanFlow | Dashboard</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KanbanFlow | Dashboard</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(180deg, #fffaf8 0%, #f4f0ff 100%);
-      color: #2b2b2b;
-      min-height: 100vh;
-      display: flex;
-    }
-
-    .sidebar {
-      width: 280px;
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(14px);
-      border-right: 1px solid rgba(0,0,0,0.05);
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 1.7rem;
-      font-weight: 700;
-      color: #8b7cf8;
-      margin-bottom: 40px;
-    }
-
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .menu a {
-      text-decoration: none;
-      color: #555;
-      padding: 14px 18px;
-      border-radius: 14px;
-      transition: 0.3s ease;
-      font-weight: 500;
-    }
-
-    .menu a:hover,
-    .menu a.active {
-      background: #8b7cf8;
-      color: white;
-      box-shadow: 0 10px 25px rgba(139,124,248,0.2);
-    }
-
-    .logout-btn {
-      border: none;
-      background: #ffeded;
-      color: #e5484d;
-      padding: 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
-
-    .logout-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .main {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .topbar h1 {
-      font-size: 2.5rem;
-      margin-bottom: 8px;
-    }
-
-    .topbar p {
-      color: #666;
-    }
-
-    .create-project-btn {
-      background: #8b7cf8;
-      color: white;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 12px 25px rgba(139,124,248,0.25);
-      transition: 0.3s ease;
-    }
-
-    .create-project-btn:hover {
-      transform: translateY(-2px);
-      background: #7a68f0;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .project-card {
-      background: rgba(255,255,255,0.85);
-      border-radius: 26px;
-      padding: 28px;
-      border: 1px solid rgba(0,0,0,0.04);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.05);
-      transition: 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 6px;
-      top: 0;
-      left: 0;
-      background: linear-gradient(90deg, #8b7cf8, #d5c7ff);
-    }
-
-    .project-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .project-card h3 {
-      margin-bottom: 14px;
-      font-size: 1.4rem;
-    }
-
-    .project-card p {
-      color: #666;
-      line-height: 1.7;
-      margin-bottom: 22px;
-    }
-
-    .project-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #777;
-      font-size: 0.9rem;
-    }
-
-    .status {
-      background: #ece7ff;
-      color: #7a63ff;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 20px;
-    }
-
-    .modal-content {
-      width: 100%;
-      max-width: 500px;
-      background: white;
-      border-radius: 28px;
-      padding: 32px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
-    }
-
-    .modal-content h2 {
-      margin-bottom: 24px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .input-group label {
-      font-weight: 600;
-      color: #444;
-    }
-
-    .input-group input,
-    .input-group textarea {
-      padding: 15px;
-      border-radius: 14px;
-      border: 1px solid #ddd;
-      outline: none;
-      transition: 0.3s ease;
-      resize: none;
-    }
-
-    .input-group input:focus,
-    .input-group textarea:focus {
-      border-color: #8b7cf8;
-      box-shadow: 0 0 0 4px rgba(139,124,248,0.1);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .save-btn,
-    .cancel-btn {
-      flex: 1;
-      padding: 14px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s ease;
-    }
-
-    .save-btn {
-      background: #8b7cf8;
-      color: white;
-    }
-
-    .cancel-btn {
-      background: #f1f1f1;
-    }
-
-    .save-btn:hover,
-    .cancel-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-      }
-
-      .sidebar {
-        width: 100%;
-      }
-
-      .main {
-        padding: 24px;
-      }
-    }
-
-  </style>
-</head>
-<body>
-
-  <aside class="sidebar">
-
-    <div>
-      <div class="logo">KanbanFlow</div>
-
-      <nav class="menu">
-        <a href="#" class="active">📁 Projetos</a>
-        <a href="#">📋 Tarefas</a>
-        <a href="#">📈 Histórico</a>
-        <a href="#">⚙️ Configurações</a>
-      </nav>
-    </div>
-
-    <button class="logout-btn" id="logoutBtn">
-      Sair da Conta
-    </button>
-
-  </aside>
-
-  <main class="main">
-
-    <div class="topbar">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
       <div>
-        <h1>Seus Projetos</h1>
-        <p>Organize seus projetos e acompanhe tarefas em tempo real.</p>
+        <div class="logo">KanbanFlow</div>
+
+        <nav class="menu">
+          <a href="#" class="active">📁 Projetos</a>
+          <a href="#">📋 Tarefas</a>
+          <a href="#">📈 Histórico</a>
+          <a href="#">⚙️ Configurações</a>
+        </nav>
       </div>
 
-      <button class="create-project-btn" id="openModalBtn">
-        + Novo Projeto
-      </button>
-    </div>
+      <button class="logout-btn" id="logoutBtn">Sair da Conta</button>
+    </aside>
 
-    <div class="projects-grid" id="projectsGrid">
-
-    </div>
-
-  </main>
-
-  <div class="modal" id="projectModal">
-
-    <div class="modal-content">
-      <h2>Criar Novo Projeto</h2>
-
-      <form id="projectForm">
-
-        <div class="input-group">
-          <label>Nome do Projeto</label>
-          <input type="text" id="projectNome" required>
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Seus Projetos</h1>
+          <p>Organize seus projetos e acompanhe tarefas em tempo real.</p>
         </div>
 
-        <div class="modal-actions">
-          <button type="submit" class="save-btn">
-            Criar Projeto
-          </button>
+        <button class="create-project-btn" id="openModalBtn">
+          + Novo Projeto
+        </button>
+      </div>
 
-          <button type="button" class="cancel-btn" id="closeModalBtn">
-            Cancelar
-          </button>
-        </div>
+      <div class="projects-grid" id="projectsGrid"></div>
+    </main>
 
-      </form>
+    <div class="modal" id="projectModal">
+      <div class="modal-content">
+        <h2>Criar Novo Projeto</h2>
+
+        <form id="projectForm">
+          <div class="input-group">
+            <label>Nome do Projeto</label>
+            <input type="text" id="projectNome" required />
+          </div>
+
+          <div class="modal-actions">
+            <button type="submit" class="save-btn">Criar Projeto</button>
+
+            <button type="button" class="cancel-btn" id="closeModalBtn">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-
-  </div>
-
-  <script>
-
-    const API_URL = 'http://localhost:8080';
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      window.location.href = 'index.html';
-    }
-
-    const projectsGrid = document.getElementById('projectsGrid');
-
-    const modal = document.getElementById('projectModal');
-    const openModalBtn = document.getElementById('openModalBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-
-    const projectForm = document.getElementById('projectForm');
-
-    openModalBtn.addEventListener('click', () => {
-      modal.style.display = 'flex';
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-
-    async function carregarProjetos() {
-
-      try {
-
-        const response = await fetch(`${API_URL}/projetos`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        const projetos = await response.json();
-
-        projectsGrid.innerHTML = '';
-
-        projetos.content?.forEach(projeto => {
-
-          const card = document.createElement('div');
-          card.classList.add('project-card');
-
-          card.innerHTML = `
-            <h3>${projeto.nome}</h3>
-
-            <div class="project-footer">
-              <span>${new Date().toLocaleDateString()}</span>
-              <span class="status">Ativo</span>
-            </div>
-          `;
-
-          card.addEventListener('click', () => {
-            localStorage.setItem('projetoId', projeto.id);
-            window.location.href = 'projetos.html';
-          });
-
-          projectsGrid.appendChild(card);
-
-        });
-
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    projectForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const nome = document.getElementById('projectNome').value;
-
-      try {
-
-        const response = await fetch(`${API_URL}/projetos`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            nome
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro ao criar projeto');
-        }
-
-        modal.style.display = 'none';
-
-        projectForm.reset();
-
-        carregarProjetos();
-
-      } catch (error) {
-        alert(error.message);
-      }
-    });
-
-    document.getElementById('logoutBtn')
-      .addEventListener('click', () => {
-
-        localStorage.removeItem('token');
-        localStorage.removeItem('projetoId');
-
-        window.location.href = 'index.html';
-      });
-
-    carregarProjetos();
-
-  </script>
-
-</body>
-</html>
-
+  </body>
+  <script src="./js/dashboard.js"></script>
 </html>
